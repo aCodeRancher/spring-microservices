@@ -23,8 +23,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 public class UserResource {
 
-	@Autowired
+
 	private UserDaoService service;
+
+
+	public UserResource(UserDaoService service){
+		this.service=service;
+	}
 
 	@GetMapping("/users")
 	public List<User> retrieveAllUsers() {
