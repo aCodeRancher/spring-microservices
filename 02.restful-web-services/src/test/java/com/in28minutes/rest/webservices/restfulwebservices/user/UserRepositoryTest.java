@@ -25,6 +25,7 @@ class UserRepositoryTest {
         User user = new User(1005, "Alan", new Date());
         User savedUser =  repository.save(user);
         assertTrue(savedUser !=null);
+
     }
 
     @Test
