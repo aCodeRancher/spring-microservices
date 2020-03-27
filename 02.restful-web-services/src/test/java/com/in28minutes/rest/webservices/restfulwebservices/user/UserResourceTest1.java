@@ -45,7 +45,4 @@ class UserResourceTest1 {
         assertTrue(response.getStatus()== HttpStatus.NOT_FOUND.value());
         verify(service,times(1) ).findOne(10);
     }
-
-
-
 }
