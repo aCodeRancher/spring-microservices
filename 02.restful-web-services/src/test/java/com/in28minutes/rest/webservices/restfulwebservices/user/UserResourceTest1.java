@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -22,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 //Test case with controller advice
 @AutoConfigureMockMvc
@@ -37,7 +39,8 @@ class UserResourceTest1 {
     @Mock
     private UserDaoService service;
 
-
+    @Captor
+    ArgumentCaptor<User> captor;
     @BeforeEach
     public void setUp(){
          this.mockMvc = MockMvcBuilders.standaloneSetup(controller)
@@ -57,11 +60,31 @@ class UserResourceTest1 {
     //use lenient to remove unnecessary stubbing.
     //service.save() method is never called as the user cannot be validated
     //reference https://www.baeldung.com/mockito-unnecessary-stubbing-exception
-    public void createUser() throws Exception{
-        User user = new User(null, "A", new Date());
-        lenient().when(service.save(user)).thenReturn(user);
-        MockHttpServletResponse response = mockMvc.perform(post("/users")).andReturn().getResponse();
-        assertTrue(response.getStatus()== HttpStatus.BAD_REQUEST.value());
+    public void createUser_notValidated() throws Exception{
+        String userInput= "{\"name\":\"A\", \"birthDate\":\"2020-02-25T15:23:35.041+0000\", \"posts\":null}";
+        User user = new User(20, "A", new Date());
+        lenient().when(service.save(any())).thenReturn(user);
+        mockMvc.perform(
+                post("/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON).content(userInput))
+                .andExpect(status().isBadRequest());
+
         verify(service,times(0)).save(user);
+    }
+
+
+    @Test
+    public void createUser() throws Exception{
+        String userInput= "{\"name\":\"Alan\", \"birthDate\":\"2020-02-25T15:23:35.041+0000\", \"posts\":null}";
+        User user = new User(20, "Alan", new Date());
+        when(service.save(any())).thenReturn(user);
+        mockMvc.perform(
+                   post("/users")
+                   .contentType(MediaType.APPLICATION_JSON)
+                   .accept(MediaType.APPLICATION_JSON).content(userInput))
+                .andExpect(status().isCreated());
+
+        verify(service,times(1)).save(captor.capture());
     }
 }
