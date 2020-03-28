@@ -41,7 +41,7 @@ class UserResourceTest {
     public  void retrieveAllUsers() {
           List<User> allUsers = new ArrayList<>();
           allUsers.add(user);
-          when(controller.retrieveAllUsers()).thenReturn(allUsers);
+          when(service.findAll()).thenReturn(allUsers);
           List<User> returnUsers = controller.retrieveAllUsers();
           assertTrue(returnUsers.size()==1);
           verify(service,times(1)).findAll();
