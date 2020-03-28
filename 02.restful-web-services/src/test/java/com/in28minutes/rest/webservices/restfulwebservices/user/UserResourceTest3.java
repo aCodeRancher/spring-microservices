@@ -27,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @WebMvcTest(UserResource.class)
+//Don't scan for another controller, UserJPAResource because the userRepository is not loaded by the WebMvcTest
 @ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = UserJPAResource.class))
 class UserResourceTest3 {
 
