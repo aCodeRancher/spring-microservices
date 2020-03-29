@@ -23,6 +23,7 @@ class FilteringControllerTest {
                   .andExpect(content().string(expected));
     }
 
+
     //filter out value 1
     @Test
     public void retrieveListOfSomeBeans() throws Exception{
