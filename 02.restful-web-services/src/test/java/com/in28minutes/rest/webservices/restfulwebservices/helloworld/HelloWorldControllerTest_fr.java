@@ -11,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("fr")
+
 public class HelloWorldControllerTest_fr {
 
     @Autowired
