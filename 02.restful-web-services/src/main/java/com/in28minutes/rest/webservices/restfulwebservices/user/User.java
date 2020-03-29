@@ -19,11 +19,11 @@ public class User {
 	private Integer id;
 
 	@Size(min=2, message="Name should have atleast 2 characters")
-	@ApiModelProperty(notes="Name should have atleast 2 characters")
+	@ApiModelProperty(notes="Name should have atleast 2 characters", dataType = "String")
 	private String name;
 
 	@Past
-	@ApiModelProperty(notes="Birth date should be in the past")
+	@ApiModelProperty(notes="Birth date should be in the past", dataType="Date")
 	private Date birthDate;
 	
 	@OneToMany(mappedBy="user", cascade = CascadeType.REMOVE)
