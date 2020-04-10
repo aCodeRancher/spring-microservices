@@ -4,12 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.in28minutes.learning.jpa.jpain10steps.entity.User;
 import com.in28minutes.learning.jpa.jpain10steps.service.UserDAOService;
 
 @Component
+@Profile("!test")
 public class UserDaoServiceCommandLineRunner implements CommandLineRunner{
 
 	private static final Logger log = 
