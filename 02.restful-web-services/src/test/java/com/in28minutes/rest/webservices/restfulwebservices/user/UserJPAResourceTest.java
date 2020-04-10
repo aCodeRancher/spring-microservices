@@ -43,6 +43,9 @@ class UserJPAResourceTest {
     ArgumentCaptor<User> captorUser;
 
     @Captor
+    ArgumentCaptor<List<User>> captorUsers;
+
+    @Captor
     ArgumentCaptor<Post> captorPost;
     @Test
     public void retrieveAllUser() throws Exception{
@@ -109,14 +112,37 @@ class UserJPAResourceTest {
         verify(userRepository,times(1)).save(captorUser.capture());
     }
 
+    @Test
+    public void createUsers() throws Exception{
+        String strdate = "1998-02-04 11:40:00";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        Date birthdate = dateFormat.parse(strdate);
+        User user = new User(1, "Alan", birthdate);
+        User user1 = new User(2,"Ellen", birthdate);
+        List<User> users = new ArrayList<>();
+        users.add(user);
+        users.add(user1);
+        String input = asJson(users);
+        when(userRepository.saveAll(any())).thenReturn(users);
+        mockMvc.perform(post("/jpa/allusers")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON).content(input))
+                .andExpect(status().is2xxSuccessful());
+        verify(userRepository,times(1)).saveAll(captorUsers.capture());
+    }
+
     private String asJson(Object obj){
         try{
+
              return new ObjectMapper().writeValueAsString(obj);
+
         }
         catch(Exception e){
             throw new RuntimeException();
         }
     }
+
+
 
     @Test
     public void retrieveUserPosts() throws Exception{
