@@ -24,7 +24,7 @@ class CurrencyConversionControllerTest {
     public void convertCurrency_feign() {
         TestRestTemplate testRestTemplate = new TestRestTemplate();
         ResponseEntity<String> response = testRestTemplate.getForEntity("http://localhost:8100/currency-converter-feign/from/USD/to/INR/quantity/100", String.class);
-        String expected = "{\"id\":10001,\"from\":\"USD\",\"to\":\"INR\",\"conversionMultiple\":65.00,\"quantity\":100,\"totalCalculatedAmount\":6500.00\"port\":8000}";
+        String expected = "{\"id\":10001,\"from\":\"USD\",\"to\":\"INR\",\"conversionMultiple\":65.00,\"quantity\":100,\"totalCalculatedAmount\":6500.00,\"port\":8000}";
         String expected1= "{\"id\":10001,\"from\":\"USD\",\"to\":\"INR\",\"conversionMultiple\":65.00,\"quantity\":100,\"totalCalculatedAmount\":6500.00,\"port\":8001}";
         assertTrue(response.getBody().contains(expected) || response.getBody().contains(expected1));
     }
