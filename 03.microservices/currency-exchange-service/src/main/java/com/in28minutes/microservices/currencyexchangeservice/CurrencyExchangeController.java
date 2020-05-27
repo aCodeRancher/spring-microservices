@@ -1,5 +1,6 @@
 package com.in28minutes.microservices.currencyexchangeservice;
 
+import com.in28minutes.microservices.currencyexchangeservice.repository.ExchangeValueRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,22 +16,22 @@ public class CurrencyExchangeController {
 
 	@Autowired
 	private Environment environment;
-	
+
 	@Autowired
-	private ExchangeValueRepository repository;
+	protected ExchangeValueRepository repository;
+
 	
 	@GetMapping("/currency-exchange/from/{from}/to/{to}")
 	public ExchangeValue retrieveExchangeValue
 		(@PathVariable String from, @PathVariable String to){
 		
-		ExchangeValue exchangeValue = 
+		ExchangeValue exchangeValue =
 				repository.findByFromAndTo(from, to);
-		
+
 		exchangeValue.setPort(
-				Integer.parseInt(environment.getProperty("local.server.port")));
+				Integer.parseInt(environment.getProperty("server.port")));
 		
 		logger.info("{}", exchangeValue);
-		
-		return exchangeValue;
+	   return exchangeValue;
 	}
 }
