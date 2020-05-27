@@ -1,7 +1,5 @@
 package com.in28minutes.microservices.currencyexchangeservice;
 
-import com.netflix.discovery.EurekaClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
