@@ -13,7 +13,7 @@ public class LimitsServiceApplicationTests {
 	//run  SpringCloudConfigServerApplication first, then run LimitsServiceApplication
 	//next, run this test
 	public void retrieveLimits(){
-		String expected = "{\"maximum\":9999,\"minimum\":103}";
+		String expected = "{\"maximum\":9999,\"minimum\":102}";
 		TestRestTemplate testRestTemplate = new TestRestTemplate();
 		ResponseEntity<String> response = testRestTemplate.getForEntity("http://localhost:"+port+"/limits", String.class);
 		assertTrue(response.getBody().contains(expected));
