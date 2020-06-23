@@ -1,19 +1,17 @@
 package com.in28minutes.rest.webservices.restfulwebservices.user;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.mvc.ControllerLinkBuilder;
-import org.springframework.http.HttpStatus;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,13 +31,12 @@ public class UserJPAResource {
 	private PostRepository postRepository;
 
 	@GetMapping("/jpa/users")
-	public  List<User>  retrieveAllUsers() {
-
-		return  userRepository.findAll();
-	 }
+	public List<User> retrieveAllUsers() {
+		return userRepository.findAll();
+	}
 
 	@GetMapping("/jpa/users/{id}")
-	public Resource<User> retrieveUser(@PathVariable int id) {
+	public EntityModel<User> retrieveUser(@PathVariable int id) {
 		Optional<User> user = userRepository.findById(id);
 
 		if (!user.isPresent())
@@ -47,9 +44,9 @@ public class UserJPAResource {
 
 		// "all-users", SERVER_PATH + "/users"
 		// retrieveAllUsers
-		Resource<User> resource = new Resource<User>(user.get());
+		EntityModel<User> resource = EntityModel.of(user.get());//new EntityModel<User>(user.get());
 
-		ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllUsers());
+		WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllUsers());
 
 		resource.add(linkTo.withRel("all-users"));
 
@@ -77,20 +74,6 @@ public class UserJPAResource {
 				.toUri();
 
 		return ResponseEntity.created(location).build();
-
-	}
-
-	@PostMapping("/jpa/allusers")
-	public ResponseEntity< List<ResponseEntity>> createUsers(@Valid @RequestBody Iterable<User> users) {
-		Iterable<User> savedUser = userRepository.saveAll(users);
-        Iterator<User> itr = savedUser.iterator();
-        List<ResponseEntity>  entities = new  ArrayList<ResponseEntity> ();
-        while (itr.hasNext()) {
-			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(itr.next().getId())
-					.toUri();
-			 entities.add( ResponseEntity.created(location).build());
-		}
-		return  new ResponseEntity<>(entities, HttpStatus.OK);
 
 	}
 	
