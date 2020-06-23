@@ -1,0 +1,21 @@
+create schema if not exists linkedin;
+create table if not exists linkedin.member (
+                                               account Long primary key auto_increment,
+                                               name VARCHAR(255)
+);
+
+create schema if not exists myspace;
+create table if not exists myspace.member (
+                                              account Long primary key auto_increment,
+                                              name VARCHAR(255)
+);
+create table if not exists post (
+                      id Long primary key auto_increment,
+                      name VARCHAR(255),
+                      role VARCHAR(255)
+);
+insert into user values(10001, 'Jane', 'developer');
+insert into user values(10002, 'Tommy', 'CFO');
+insert into post values(11001, 'My First Post', 10001);
+insert into linkedin.member values(20001, 'John Smith');
+insert into myspace.member values(20001, 'John Smith');
