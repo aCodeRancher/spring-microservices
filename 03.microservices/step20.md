@@ -580,7 +580,7 @@ spring.h2.console.enabled=true
 ```
 ---
 
-### /currency-exchange-service/src/main/resources/data.sql
+### /currency-exchange-service/src/main/resources/data.sql_bk
 
 ```
 insert into exchange_value(id,currency_from,currency_to,conversion_multiple,port)

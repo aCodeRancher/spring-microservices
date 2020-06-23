@@ -9,6 +9,7 @@ public class CurrencyConversionBean {
 	private BigDecimal conversionMultiple;
 	private BigDecimal quantity;
 	private BigDecimal totalCalculatedAmount;
+
 	private int port;
 
 	public CurrencyConversionBean() {

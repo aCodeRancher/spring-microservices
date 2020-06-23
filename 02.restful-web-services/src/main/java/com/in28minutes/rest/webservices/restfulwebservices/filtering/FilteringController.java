@@ -36,6 +36,7 @@ public class FilteringController {
 		List<SomeBean> list = Arrays.asList(new SomeBean("value1", "value2", "value3"),
 				new SomeBean("value12", "value22", "value32"));
 
+
 		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("field2", "field3");
 
 		FilterProvider filters = new SimpleFilterProvider().addFilter("SomeBeanFilter", filter);

@@ -640,7 +640,7 @@ eureka.client.service-url.default-zone=http://localhost:8761/eureka
 ```
 ---
 
-### /currency-exchange-service/src/main/resources/data.sql
+### /currency-exchange-service/src/main/resources/data.sql_bk
 
 ```
 insert into exchange_value(id,currency_from,currency_to,conversion_multiple,port)
@@ -2124,7 +2124,7 @@ eureka.client.service-url.default-zone=http://localhost:8761/eureka
 ```
 ---
 
-### /step29/currency-exchange-service/src/main/resources/data.sql
+### /step29/currency-exchange-service/src/main/resources/data.sql_bk
 
 ```
 insert into exchange_value(id,currency_from,currency_to,conversion_multiple,port)

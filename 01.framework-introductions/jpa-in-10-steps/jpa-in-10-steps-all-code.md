@@ -146,7 +146,7 @@ JpaBaseConfiguration#transactionManager matched:
 ### /src/main/java/com/in28minutes/learning/jpa/jpain10steps/entity/User.java
 
 ```java
-package com.in28minutes.learning.jpa.jpain10steps.entity;
+package com.in28minutes.learning.jpa.jpain10steps.config.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -223,7 +223,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
-import com.in28minutes.learning.jpa.jpain10steps.entity.User;
+import com.in28minutes.learning.jpa.jpain10steps.db.users.ds.User;
 
 @Repository
 @Transactional
@@ -254,7 +254,7 @@ package com.in28minutes.learning.jpa.jpain10steps.service;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.in28minutes.learning.jpa.jpain10steps.entity.User;
+import com.in28minutes.learning.jpa.jpain10steps.db.users.ds.User;
 
 public interface UserRepository extends JpaRepository<User, Long>{
 
@@ -273,7 +273,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.in28minutes.learning.jpa.jpain10steps.entity.User;
+import com.in28minutes.learning.jpa.jpain10steps.db.users.ds.User;
 import com.in28minutes.learning.jpa.jpain10steps.service.UserDAOService;
 
 @Component
@@ -310,8 +310,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.in28minutes.learning.jpa.jpain10steps.entity.User;
-import com.in28minutes.learning.jpa.jpain10steps.service.UserRepository;
+import com.in28minutes.learning.jpa.jpain10steps.db.users.ds.User;
+import com.in28minutes.learning.jpa.jpain10steps.db.users.dao.UsersRepository;
 
 @Component
 public class UserRepositoryCommandLineRunner implements CommandLineRunner{
