@@ -29,7 +29,7 @@ public class SwaggerConfig {
 			new HashSet<String>(Arrays.asList("application/json",
 					"application/xml"));
 
-	@Bean
+	 @Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.apiInfo(DEFAULT_API_INFO)
