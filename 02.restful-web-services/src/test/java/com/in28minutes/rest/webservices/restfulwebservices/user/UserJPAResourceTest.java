@@ -58,7 +58,7 @@ class UserJPAResourceTest {
          when(userRepository.findAll()).thenReturn(userslist);
          MvcResult result = mockMvc.perform(get("/jpa/users")).andReturn();
          String output = result.getResponse().getContentAsString();
-         String expected = "[{\"id\":1,\"name\":\"Alan\",\"birthDate\":\"1998-01-04T16:40:00.000+0000\",\"posts\":null}]";
+         String expected = "[{\"id\":1,\"name\":\"Alan\",\"birthDate\":\"1998-01-04T16:40:00.000+00:00\",\"posts\":null}]";
          assertTrue(output.contains(expected));
          verify(userRepository,times(1)).findAll();
     }
@@ -74,7 +74,7 @@ class UserJPAResourceTest {
         MvcResult result = mockMvc.perform(get("/jpa/users/1")).andReturn();
         String output = result.getResponse().getContentAsString();
         String expected =
-                "{\"id\":1,\"name\":\"Alan\",\"birthDate\":\"1998-01-04T16:40:00.000+0000\",\"posts\":null,\"_links\":{\"all-users\":{\"href\":\"http://localhost/jpa/users\"}}}";
+                "{\"id\":1,\"name\":\"Alan\",\"birthDate\":\"1998-01-04T16:40:00.000+00:00\",\"posts\":null,\"_links\":{\"all-users\":{\"href\":\"http://localhost/jpa/users\"}}}";
         assertTrue(output.contains(expected));
         verify(userRepository,times(1)).findById(1);
     }
