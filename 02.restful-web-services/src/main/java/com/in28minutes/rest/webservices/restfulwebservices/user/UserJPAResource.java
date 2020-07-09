@@ -4,6 +4,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +14,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -76,7 +79,21 @@ public class UserJPAResource {
 		return ResponseEntity.created(location).build();
 
 	}
-	
+
+	@PostMapping("/jpa/allusers")
+	public ResponseEntity< List<ResponseEntity>> createUsers(@Valid @RequestBody Iterable<User> users) {
+		Iterable<User> savedUser = userRepository.saveAll(users);
+        Iterator<User> itr = savedUser.iterator();
+        List<ResponseEntity>  entities = new ArrayList<ResponseEntity>();
+        while (itr.hasNext()) {
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(itr.next().getId())
+					.toUri();
+			 entities.add( ResponseEntity.created(location).build());
+		}
+		return  new ResponseEntity<>(entities, HttpStatus.OK);
+
+	}
+
 	@GetMapping("/jpa/users/{id}/posts")
 	public List<Post> retrieveAllUsers(@PathVariable int id) {
 		Optional<User> userOptional = userRepository.findById(id);
