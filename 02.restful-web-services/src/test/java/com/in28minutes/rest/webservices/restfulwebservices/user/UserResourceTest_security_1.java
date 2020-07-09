@@ -31,7 +31,7 @@ class UserResourceTest_security_1 {
        assertTrue(response.contains("Jack"));
 
     }
-
+   //add spring-boot-starter-security dependency to the pom before run this test
     @Test
     public void retrieveAllUser_notAuthenticated() throws Exception{
       mockMvc.perform(get("/users").with(httpBasic("u","p"))
