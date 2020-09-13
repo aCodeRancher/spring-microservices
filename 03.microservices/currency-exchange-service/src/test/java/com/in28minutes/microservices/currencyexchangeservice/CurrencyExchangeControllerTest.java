@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 
@@ -19,7 +20,8 @@ class CurrencyExchangeControllerTest {
 
     @Test
     public void retrieveExchangeValue() throws Exception{
-        MvcResult result = mock.perform(get("/currency-exchange/from/USD/to/INR")).andReturn();
+        MvcResult result = mock.perform(get("/currency-exchange/from/USD/to/INR")
+                   .with(httpBasic("good_user", "good_pin"))).andReturn();
         String output = result.getResponse().getContentAsString();
         assertTrue(output.contains("USD"));
         assertTrue(output.contains("INR"));
