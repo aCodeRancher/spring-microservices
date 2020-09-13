@@ -13,7 +13,7 @@ class CurrencyConversionControllerTest {
 
    @Test
     public void convertCurrency_zuul() {
-        TestRestTemplate testRestTemplate = new TestRestTemplate();
+        TestRestTemplate testRestTemplate = new TestRestTemplate("good_user", "good_pin");
         ResponseEntity<String> response = testRestTemplate.getForEntity("http://localhost:8765/currency-exchange-service/currency-exchange/from/USD/to/INR", String.class);
        String expected = "{\"id\":10001,\"from\":\"USD\",\"to\":\"INR\",\"conversionMultiple\":65.00,\"port\":8000}";
        String expected1= "{\"id\":10001,\"from\":\"USD\",\"to\":\"INR\",\"conversionMultiple\":65.00,\"port\":8001}";
@@ -22,7 +22,7 @@ class CurrencyConversionControllerTest {
 
     @Test
     public void convertCurrency_feign() {
-        TestRestTemplate testRestTemplate = new TestRestTemplate();
+        TestRestTemplate testRestTemplate = new TestRestTemplate("good_user", "good_pin");
         ResponseEntity<String> response = testRestTemplate.getForEntity("http://localhost:8100/currency-converter-feign/from/USD/to/INR/quantity/100", String.class);
         String expected = "{\"id\":10001,\"from\":\"USD\",\"to\":\"INR\",\"conversionMultiple\":65.00,\"quantity\":100,\"totalCalculatedAmount\":6500.00,\"port\":8000}";
         String expected1= "{\"id\":10001,\"from\":\"USD\",\"to\":\"INR\",\"conversionMultiple\":65.00,\"quantity\":100,\"totalCalculatedAmount\":6500.00,\"port\":8001}";
@@ -31,7 +31,7 @@ class CurrencyConversionControllerTest {
 
     @Test
     public void convertCurrency_exchangeService() {
-        TestRestTemplate testRestTemplate = new TestRestTemplate();
+        TestRestTemplate testRestTemplate = new TestRestTemplate("good_user", "good_pin");
         ResponseEntity<String> response = testRestTemplate.getForEntity("http://localhost:8100/currency-converter/from/USD/to/INR/quantity/10", String.class);
         String expected = "{\"id\":10001,\"from\":\"USD\",\"to\":\"INR\",\"conversionMultiple\":65.00,\"quantity\":10,\"totalCalculatedAmount\":650.00,\"port\":8000}";
         assertTrue(response.getBody().contains(expected));
