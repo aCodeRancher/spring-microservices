@@ -23,11 +23,6 @@ public class CurrencyConversionController {
 	 @Autowired
 	 private CurrencyExchangeServiceProxy proxy;
 
-	 @Value("${currency-exchange-username}")
-	 private String username;
-
-	@Value("${currency-exchange-password}")
-	private String password;
 
 	@GetMapping("/currency-converter/from/{from}/to/{to}/quantity/{quantity}")
 	public CurrencyConversionBean convertCurrency(@PathVariable String from, @PathVariable String to,
@@ -38,7 +33,7 @@ public class CurrencyConversionController {
 		uriVariables.put("from", from);
 		uriVariables.put("to", to);
         RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
-        RestTemplate restTemplate = restTemplateBuilder.basicAuthentication(username, password).build();
+        RestTemplate restTemplate = restTemplateBuilder.build();
 		ResponseEntity<CurrencyConversionBean> responseEntity = restTemplate.getForEntity(
 				"http://localhost:8000/currency-exchange/from/{from}/to/{to}", CurrencyConversionBean.class,
 				uriVariables);
