@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
@@ -58,5 +59,17 @@ class UserJPAResourceTest_security {
         List<User> users = gson.fromJson(jsonResult, listType);
         assertTrue(users.size()==4);
         assertTrue(users.get(0).getName().equals("Teresa")) ;
+    }
+
+    @Test
+    @WithAnonymousUser
+    void createUser_unauthorized_Test() throws Exception{
+
+        String teresaUser = "{\"name\": \"Teresa\", \"birthDate\":\"2020-11-13T20:30:28.051+00:00\", \"posts\":[]}";
+        mockMvc.perform(post("/jpa/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(teresaUser)).andExpect(status().isUnauthorized());
+
+
     }
 }
