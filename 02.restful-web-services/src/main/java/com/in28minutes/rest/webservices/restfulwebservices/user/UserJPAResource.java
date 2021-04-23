@@ -33,7 +33,7 @@ public class UserJPAResource {
 	@Autowired
 	private PostRepository postRepository;
 
-	@GetMapping("/jpa/users")
+	@GetMapping(value = "/jpa/users", produces = "application/json")
 	public List<User> retrieveAllUsers() {
 		return userRepository.findAll();
 	}
