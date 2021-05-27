@@ -30,8 +30,8 @@ class UserResourceTest_security {
     public void retrieveAllUser_notAuthenticated(){
         TestRestTemplate testRestTemplate = new TestRestTemplate("noUser", "noPassword");
         ResponseEntity<String> response = testRestTemplate.getForEntity("http://localhost:"+port+"/users",String.class);
-        assertTrue(response.getStatusCodeValue()==200);
-        assertTrue(response.toString().contains("Please sign in"));
+        assertTrue(response.getStatusCodeValue()==401);
+
     }
 
 }
