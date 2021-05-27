@@ -7,13 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-@ApiModel(description="All details about the user.")
 @Entity
-//@JsonFilter("userFilter")
 public class User {
 
 	@Id
@@ -21,12 +15,10 @@ public class User {
 	private Integer id;
 
 	@Size(min=2, message="Name should have atleast 2 characters")
-	@ApiModelProperty(notes="Name should have atleast 2 characters", dataType = "String")
-	private String name;
+    private String name;
 
 	@Past
-	@ApiModelProperty(notes="Birth date should be in the past", dataType="Date")
-	private Date birthDate;
+    private Date birthDate;
 	
 	@OneToMany(mappedBy="user", cascade = CascadeType.REMOVE)
 	//removing the user, also removing the posts
