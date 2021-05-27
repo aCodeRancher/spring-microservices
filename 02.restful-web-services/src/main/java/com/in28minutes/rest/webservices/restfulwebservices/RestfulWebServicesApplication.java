@@ -15,7 +15,7 @@ public class RestfulWebServicesApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(RestfulWebServicesApplication.class, args);
 	}
-	
+	/*
 	@Bean
 	@Profile("en")
 	public LocaleResolver localeResolver() {
@@ -38,5 +38,5 @@ public class RestfulWebServicesApplication {
 		AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
 		localeResolver.setDefaultLocale(Locale.GERMAN);
 		return localeResolver;
-	}
+	}*/
 }
